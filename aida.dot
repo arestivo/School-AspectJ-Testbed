@@ -1,0 +1,57 @@
+graph "druid" {
+  node [ fontname = "Trebuchet", label = "\N"]
+  node [ shape = "tab", color = "blue"]
+  node [ color = "green"]
+    "schedule" [label="schedule"]
+  node [ color = "blue"]
+  node [ color = "green"]
+    "structure" [label="structure"]
+  node [ color = "blue"]
+  node [ color = "green"]
+    "courses" [label="courses"]
+  node [ color = "blue"]
+  node [ color = "green"]
+    "teaching" [label="teaching"]
+  node [ color = "blue"]
+  node [ color = "green"]
+    "authentication" [label="authentication"]
+  node [ color = "blue"]
+  node [ color = "green"]
+    "grading" [label="grading"]
+  node [ color = "blue"]
+  node [ color = "green"]
+    "permission" [label="permission"]
+  node [ color = "blue"]
+  node [ color = "green"]
+    "reporting" [label="reporting"]
+  node [ color = "blue"]
+  node [ color = "green"]
+    "people" [label="people"]
+  node [ color = "blue"]
+  edge [ color = "black", arrowhead="empty", style="dashed" ]
+    "schedule" -- "people"
+    "schedule" -- "teaching"
+    "schedule" -- "structure"
+    "teaching" -- "people"
+    "teaching" -- "courses"
+    "authentication" -- "people"
+    "grading" -- "people"
+    "grading" -- "teaching"
+    "permission" -- "authentication"
+    "permission" -- "people"
+    "permission" -- "teaching"
+    "permission" -- "grading"
+    "permission" -- "structure"
+    "permission" -- "schedule"
+    "permission" -- "courses"
+    "reporting" -- "people"
+    "reporting" -- "grading"
+  edge [ color = "blue", arrowhead="dot", style="solid" ]
+    "permission" -- "grading"
+    "permission" -- "authentication"
+    "permission" -- "structure"
+    "permission" -- "courses"
+    "permission" -- "teaching"
+    "permission" -- "people"
+    "permission" -- "schedule"
+}
