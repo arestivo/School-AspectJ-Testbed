@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import teaching.Instance;
 
-public class Avaliation {
+public class Evaluation {
 	public enum TYPE {EXAM, TEST};
 
 	private int weight;
@@ -14,9 +14,9 @@ public class Avaliation {
 	
 	private Instance instance;
 
-	private static Collection<Avaliation> avaliations = new LinkedList<Avaliation>();
+	private static Collection<Evaluation> evaluations = new LinkedList<Evaluation>();
 	
-	protected Avaliation(TYPE type, int weight, Instance instance) {
+	protected Evaluation(TYPE type, int weight, Instance instance) {
 		this.type = type;
 		this.weight = weight;
 		this.instance = instance;
@@ -46,11 +46,11 @@ public class Avaliation {
 		return instance;
 	}
 
-	public static void addAvaliation(Avaliation a) {
-		avaliations.add(a);
+	public static void addEvaluation(Evaluation a) {
+		evaluations.add(a);
 	}
 	
-	public static Collection<Avaliation> getAvaliations() {
-		return avaliations;
+	public static Collection<Evaluation> getEvaluations() {
+		return evaluations;
 	}
 }

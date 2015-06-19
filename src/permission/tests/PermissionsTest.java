@@ -2,13 +2,15 @@ package permission.tests;
 
 import infrastructure.Room;
 import infrastructure.RoomFactory;
-import grading.Avaliation;
-import grading.AvaliationFactory;
+import grading.Evaluation;
+import grading.EvaluationFactory;
 import grading.GradeFactory;
 import people.Administrator;
+import people.Person;
 import people.PersonFactory;
 import people.Student;
 import people.Teacher;
+import permission.PermissionException;
 import schedule.Lecture;
 import schedule.LectureFactory;
 import teaching.Instance;
@@ -28,6 +30,13 @@ public class PermissionsTest extends TestCase {
 	
 	@ReplaceTest("infrastructure.tests.RoomTest.testRoomList")
 	public void testRoomPermissions() {
+		try {
+			RoomFactory.createRoom(100);
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_LOGIN, e.getMessage());
+		}
+		
 		Administrator admin = PersonFactory.createAdministrator("Jonh", "103 St. James Street");
 		admin.setLogin("admin");
 		admin.setPassword("1234");
@@ -39,7 +48,12 @@ public class PermissionsTest extends TestCase {
 		
 		Authentication.aspectOf().authenticate("jonh", "1234");
 
-		assertNull(RoomFactory.createRoom(100));
+		try {
+			RoomFactory.createRoom(100);
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_ADMIN, e.getMessage());
+		}
 
 		Authentication.aspectOf().authenticate("admin", "1234");
 		Teacher t = PersonFactory.createTeacher("Jonh", "103 St. James Street");
@@ -48,7 +62,12 @@ public class PermissionsTest extends TestCase {
 		
 		Authentication.aspectOf().authenticate("jonh2", "1234");
 
-		assertNull(RoomFactory.createRoom(100));
+		try {
+			RoomFactory.createRoom(100);
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_ADMIN, e.getMessage());
+		}		
 
 		Authentication.aspectOf().authenticate("admin", "1234");
 		Administrator a = PersonFactory.createAdministrator("Jonh", "103 St. James Street");
@@ -62,10 +81,18 @@ public class PermissionsTest extends TestCase {
 
 	@ReplaceTest("courses.tests.CourseTest.testCourseList")
 	public void testCoursePermissions() {
+		try {
+			CourseFactory.createCourse("Programming 101");
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_LOGIN, e.getMessage());
+		}
+
 		Administrator admin = PersonFactory.createAdministrator("Jonh", "103 St. James Street");
+
 		admin.setLogin("admin");
 		admin.setPassword("1234");
-
+		
 		Authentication.aspectOf().authenticate("admin", "1234");
 		Student s = PersonFactory.createStudent("Jonh", "103 St. James Street");
 		s.setLogin("jonh");
@@ -73,7 +100,12 @@ public class PermissionsTest extends TestCase {
 		
 		Authentication.aspectOf().authenticate("jonh", "1234");
 
-		assertNull(CourseFactory.createCourse("Programming 101"));
+		try {
+			CourseFactory.createCourse("Programming 101");
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_ADMIN, e.getMessage());
+		}
 
 		Authentication.aspectOf().authenticate("admin", "1234");
 		Teacher t = PersonFactory.createTeacher("Jonh", "103 St. James Street");
@@ -82,7 +114,12 @@ public class PermissionsTest extends TestCase {
 		
 		Authentication.aspectOf().authenticate("jonh2", "1234");
 
-		assertNull(CourseFactory.createCourse("Programming 101"));
+		try {
+			CourseFactory.createCourse("Programming 101");
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_ADMIN, e.getMessage());			
+		}
 
 		Authentication.aspectOf().authenticate("admin", "1234");
 		Administrator a = PersonFactory.createAdministrator("Jonh", "103 St. James Street");
@@ -95,15 +132,33 @@ public class PermissionsTest extends TestCase {
 	}
 
 	@ReplaceTest("people.tests.TestPerson.testPersonList")
-	public void testPeoplePermissions() {
-		
+	public void testPeoplePermissions() {		
 		Administrator admin = PersonFactory.createAdministrator("Jonh", "103 St. James Street");
 		admin.setLogin("admin");
 		admin.setPassword("1234");
 
-		assertNull(PersonFactory.createAdministrator("Jonh", "103 St. James Street"));
-		assertNull(PersonFactory.createStudent("Jonh", "103 St. James Street"));
-		assertNull(PersonFactory.createTeacher("Jonh", "103 St. James Street"));
+		try {
+			PersonFactory.createAdministrator("Jonh", "103 St. James Street");
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_LOGIN, e.getMessage());
+		}
+		
+		try {
+			PersonFactory.createStudent("Jonh", "103 St. James Street");
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_LOGIN, e.getMessage());
+		}
+
+		try {
+			PersonFactory.createTeacher("Jonh", "103 St. James Street");
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_LOGIN, e.getMessage());			
+		}
+
+		assertEquals(1, Person.getPeople().size());
 
 		Authentication.aspectOf().authenticate("admin", "1234");
 
@@ -111,6 +166,7 @@ public class PermissionsTest extends TestCase {
 		assertNotNull(PersonFactory.createStudent("Jonh", "103 St. James Street"));
 		assertNotNull(PersonFactory.createTeacher("Jonh", "103 St. James Street"));
 		
+		assertEquals(4, Person.getPeople().size());
 	}
 	
 	@ReplaceTest("teaching.tests.TestInstance.testInstanceList")
@@ -121,7 +177,12 @@ public class PermissionsTest extends TestCase {
 
 		assertEquals(0, Instance.getInstances().size());
 
-		InstanceFactory.createInstance(CourseFactory.createCourse("Programming 101"), 2010);
+		try {
+			InstanceFactory.createInstance(CourseFactory.createCourse("Programming 101"), 2010);
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_LOGIN, e.getMessage());
+		}
 		assertEquals(0, Instance.getInstances().size());
 
 		Authentication.aspectOf().authenticate("admin", "1234");
@@ -130,8 +191,8 @@ public class PermissionsTest extends TestCase {
 		assertEquals(1, Instance.getInstances().size());
 	}
 
-	@ReplaceTest("grading.tests.TestAvaliation.testAvaliation")
-	public void testAvaliationPermissions() {
+	@ReplaceTest("grading.tests.TestEvaluation.testEvaluation")
+	public void testEvaluationPermissions() {
 		Administrator admin = PersonFactory.createAdministrator("Jonh", "103 St. James Street");
 		admin.setLogin("admin");
 		admin.setPassword("1234");
@@ -144,22 +205,33 @@ public class PermissionsTest extends TestCase {
 		
 		Instance i = InstanceFactory.createInstance(CourseFactory.createCourse("Programmin 101"), 2010);
 		
-		assertEquals(0, Avaliation.getAvaliations().size());
+		assertEquals(0, Evaluation.getEvaluations().size());
 
-		AvaliationFactory.createAvaliation(Avaliation.TYPE.EXAM, 20, i);
-		assertEquals(0, Avaliation.getAvaliations().size());
+		try {
+			EvaluationFactory.createEvaluation(Evaluation.TYPE.EXAM, 20, i);
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_TEACHER, e.getMessage());			
+		}
+		assertEquals(0, Evaluation.getEvaluations().size());
 
 		Authentication.aspectOf().authenticate("jonh", "1234");
 
-		AvaliationFactory.createAvaliation(Avaliation.TYPE.EXAM, 20, i);
-		assertEquals(0, Avaliation.getAvaliations().size());
+		try {
+			EvaluationFactory.createEvaluation(Evaluation.TYPE.EXAM, 20, i);
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_INSTANCE_TEACHER, e.getMessage());			
+		}
+		assertEquals(0, Evaluation.getEvaluations().size());
 
 		i.addTeacher(t);
 
-		AvaliationFactory.createAvaliation(Avaliation.TYPE.EXAM, 20, i);
-		assertEquals(1, Avaliation.getAvaliations().size());
-		AvaliationFactory.createAvaliation(Avaliation.TYPE.TEST, 30, i);
-		assertEquals(2, Avaliation.getAvaliations().size());
+		EvaluationFactory.createEvaluation(Evaluation.TYPE.EXAM, 20, i);
+		assertEquals(1, Evaluation.getEvaluations().size());
+		
+		EvaluationFactory.createEvaluation(Evaluation.TYPE.TEST, 30, i);
+		assertEquals(2, Evaluation.getEvaluations().size());
 	}
 
 	@ReplaceTest("grading.tests.TestGrade.testGrade")
@@ -177,11 +249,27 @@ public class PermissionsTest extends TestCase {
 		t.setPassword("1234");
 		
 		Instance i = InstanceFactory.createInstance(CourseFactory.createCourse("Programmin 101"), 2010);
+
+		try {
+			EvaluationFactory.createEvaluation(Evaluation.TYPE.EXAM, 20, i);
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_TEACHER, e.getMessage());						
+		}
+
+		Authentication.aspectOf().authenticate("jonh", "1234");
+
+		try {
+			EvaluationFactory.createEvaluation(Evaluation.TYPE.EXAM, 20, i);
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_INSTANCE_TEACHER, e.getMessage());			
+		}
 		
 		i.addTeacher(t);
 
-		Avaliation a1 = AvaliationFactory.createAvaliation(Avaliation.TYPE.EXAM, 20, i);
-		Avaliation a2 = AvaliationFactory.createAvaliation(Avaliation.TYPE.TEST, 30, i);
+		Evaluation a1 = EvaluationFactory.createEvaluation(Evaluation.TYPE.EXAM, 20, i);
+		Evaluation a2 = EvaluationFactory.createEvaluation(Evaluation.TYPE.TEST, 30, i);
 		
 		GradeFactory.createGrade(a1, student, 10);
 		GradeFactory.createGrade(a2, student, 10);
@@ -206,10 +294,20 @@ public class PermissionsTest extends TestCase {
 		t.setPassword("1234");
 		
 		Authentication.aspectOf().authenticate("jonh1", "1234");
-		assertNull(LectureFactory.createLecture(t, r, i, Lecture.WEEKDAY.MONDAY, 10));
+		try {
+			LectureFactory.createLecture(t, r, i, Lecture.WEEKDAY.MONDAY, 10);
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_ADMIN, e.getMessage());			
+		}
 
 		Authentication.aspectOf().authenticate("jonh2", "1234");
-		assertNull(LectureFactory.createLecture(t, r, i, Lecture.WEEKDAY.MONDAY, 10));
+		try {
+			LectureFactory.createLecture(t, r, i, Lecture.WEEKDAY.MONDAY, 10);
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_ADMIN, e.getMessage());						
+		}
 
 		Authentication.aspectOf().authenticate("admin", "1234");
 		assertNotNull(LectureFactory.createLecture(t, r, i, Lecture.WEEKDAY.MONDAY, 10));
@@ -229,7 +327,12 @@ public class PermissionsTest extends TestCase {
 		assertEquals("1234", s.getPassword());
 	
 		Authentication.aspectOf().authenticate("jonh", "1234");
-		s.setPassword("4321");
+		try {
+			s.setPassword("4321");
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_ADMIN, e.getMessage());			
+		}
 		assertEquals("1234", s.getPassword());
 
 		Authentication.aspectOf().authenticate("admin", "1234");

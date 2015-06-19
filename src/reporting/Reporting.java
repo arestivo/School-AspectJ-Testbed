@@ -1,6 +1,6 @@
 package reporting;
 
-import grading.Avaliation;
+import grading.Evaluation;
 import grading.Grade;
 import people.Person;
 import people.Student;
@@ -13,7 +13,7 @@ public class Reporting {
 		}
 	}
 
-	public void getAvaliationGrades(Avaliation a) {
+	public void getEvaluationGrades(Evaluation a) {
 		String list = "";
 		for (Grade grade : Grade.getGrades(a)) {
 			list += grade.getStudent().getName() + " : " + grade.getGrade() + "\n";

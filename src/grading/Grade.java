@@ -7,26 +7,26 @@ import java.util.LinkedList;
 import people.Student;
 
 public class Grade {
-	private static HashMap<Avaliation, LinkedList<Grade>> grades = new HashMap<Avaliation, LinkedList<Grade>>();
+	private static HashMap<Evaluation, LinkedList<Grade>> grades = new HashMap<Evaluation, LinkedList<Grade>>();
 
-	private Avaliation avaliaton;
+	private Evaluation evaluation;
 
 	private Student student;
 	
 	private int grade;
 
-	protected Grade(Avaliation avaliation, Student student, int grade) {
-		avaliaton = avaliation;
+	protected Grade(Evaluation evaluation, Student student, int grade) {
+		this.evaluation = evaluation;
 		this.student = student;
 		this.grade = grade;
 	}
 	
-	public void setAvaliaton(Avaliation avaliaton) {
-		this.avaliaton = avaliaton;
+	public void setAvaliaton(Evaluation evaluation) {
+		this.evaluation = evaluation;
 	}
 
-	public Avaliation getAvaliaton() {
-		return avaliaton;
+	public Evaluation getEvaluation() {
+		return evaluation;
 	}
 
 	public void setStudent(Student student) {
@@ -46,11 +46,11 @@ public class Grade {
 	}
 
 	public static void addGrade(Grade g) {
-		if (!grades.containsKey(g.getAvaliaton())) grades.put(g.avaliaton, new LinkedList<Grade>());
-		grades.get(g.getAvaliaton()).add(g);
+		if (!grades.containsKey(g.getEvaluation())) grades.put(g.evaluation, new LinkedList<Grade>());
+		grades.get(g.getEvaluation()).add(g);
 	}
 
-	public static Collection<Grade> getGrades(Avaliation a) {
+	public static Collection<Grade> getGrades(Evaluation a) {
 		return (grades.get(a));
 	}
 }

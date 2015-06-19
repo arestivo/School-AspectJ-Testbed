@@ -38,6 +38,10 @@ public aspect Authentication {
 		return false;
 	}
 	
+	public void logoff() {
+		currentUser = null;
+	}
+	
 	public Person getCurrentUser() {
 		return currentUser;
 	}

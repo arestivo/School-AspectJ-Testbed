@@ -21,6 +21,7 @@ public class ScheduleTest extends TestCase {
 	public void testSchedule() {
 		Teacher t = PersonFactory.createTeacher("Jonh", "125 St Something Street");
 		Room r = RoomFactory.createRoom(103);
+		
 		Instance i = InstanceFactory.createInstance(CourseFactory.createCourse("Programming 101"), 2010);
 		
 		Lecture l = LectureFactory.createLecture(t, r, i, Lecture.WEEKDAY.MONDAY, 10);
