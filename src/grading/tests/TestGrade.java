@@ -24,8 +24,8 @@ public class TestGrade extends TestCase {
 
 		Grade g = GradeFactory.createGrade(a, s, 10);
 
-		assertEquals(a,g.getEvaluation());
-		assertEquals(s,g.getStudent());
+		assertEquals(a, g.getEvaluation());
+		assertEquals(s, g.getStudent());
 		assertEquals(10, g.getGrade());
 	}
 }
