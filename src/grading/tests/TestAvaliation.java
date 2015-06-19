@@ -1,5 +1,6 @@
 package grading.tests;
 
+import com.feup.contribution.aida.annotations.PackageName;
 import com.feup.contribution.aida.annotations.TestFor;
 
 import courses.CourseFactory;
@@ -9,6 +10,7 @@ import grading.Avaliation;
 import grading.AvaliationFactory;
 import junit.framework.TestCase;
 
+@PackageName("grading")
 @TestFor("grading")
 public class TestAvaliation extends TestCase {
 	public void testAvaliation() {

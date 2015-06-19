@@ -1,5 +1,7 @@
 package permission;
 
+import infrastructure.Room;
+import infrastructure.RoomFactory;
 import grading.Avaliation;  
 import grading.AvaliationFactory;
 import authentication.Authentication;
@@ -8,8 +10,6 @@ import people.Person;
 import people.PersonFactory;
 import people.Student;
 import people.Teacher;
-import structure.Room;
-import structure.RoomFactory;
 import teaching.Instance;
 import teaching.InstanceFactory;
 import courses.Course;

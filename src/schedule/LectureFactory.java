@@ -1,8 +1,8 @@
 package schedule;
 
+import infrastructure.Room;
 import people.Teacher;
 import schedule.Lecture.WEEKDAY;
-import structure.Room;
 import teaching.Instance;
 
 public class LectureFactory {

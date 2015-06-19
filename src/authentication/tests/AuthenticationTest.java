@@ -6,8 +6,10 @@ import people.PersonFactory;
 import people.Student;
 import authentication.Authentication;
 
+import com.feup.contribution.aida.annotations.PackageName;
 import com.feup.contribution.aida.annotations.TestFor;
 
+@PackageName("authentication")
 @TestFor("authentication")
 public class AuthenticationTest extends TestCase {
 

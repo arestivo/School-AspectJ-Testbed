@@ -1,11 +1,13 @@
 package courses.tests;
 
+import com.feup.contribution.aida.annotations.PackageName;
 import com.feup.contribution.aida.annotations.TestFor;
 
 import junit.framework.TestCase;
 import courses.Course;
 import courses.CourseFactory;
 
+@PackageName("courses")
 @TestFor("courses")
 public class CourseTest extends TestCase {
 	

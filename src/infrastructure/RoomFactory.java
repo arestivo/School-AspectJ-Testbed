@@ -1,4 +1,4 @@
-package structure;
+package infrastructure;
 
 public class RoomFactory {
 	public static Room createRoom(int number) {

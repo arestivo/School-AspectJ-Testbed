@@ -1,9 +1,10 @@
 package schedule;
 
+import infrastructure.Room;
+
 import java.util.HashSet; 
 
 import people.Teacher;
-import structure.Room;
 import teaching.Instance;
 
 public class Lecture {

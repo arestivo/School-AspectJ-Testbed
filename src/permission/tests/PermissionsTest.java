@@ -1,5 +1,7 @@
 package permission.tests;
 
+import infrastructure.Room;
+import infrastructure.RoomFactory;
 import grading.Avaliation;
 import grading.AvaliationFactory;
 import grading.GradeFactory;
@@ -9,23 +11,22 @@ import people.Student;
 import people.Teacher;
 import schedule.Lecture;
 import schedule.LectureFactory;
-import structure.Room;
-import structure.RoomFactory;
 import teaching.Instance;
 import teaching.InstanceFactory;
 import authentication.Authentication;
 
+import com.feup.contribution.aida.annotations.PackageName;
 import com.feup.contribution.aida.annotations.ReplaceTest;
 import com.feup.contribution.aida.annotations.TestFor;
 
 import courses.CourseFactory;
-
 import junit.framework.TestCase;
 
+@PackageName("permission")
 @TestFor("permission")
 public class PermissionsTest extends TestCase {
 	
-	@ReplaceTest("structure.tests.RoomTest.testRoomList")
+	@ReplaceTest("infrastructure.tests.RoomTest.testRoomList")
 	public void testRoomPermissions() {
 		Administrator admin = PersonFactory.createAdministrator("Jonh", "103 St. James Street");
 		admin.setLogin("admin");
