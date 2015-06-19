@@ -56,4 +56,8 @@ public class Instance {
 	public boolean hasTeacher(Teacher t) {
 		return teachers.contains(t);
 	}
+
+	public void removeTeacher(Teacher t) {
+		teachers.remove(t);
+	}
 }

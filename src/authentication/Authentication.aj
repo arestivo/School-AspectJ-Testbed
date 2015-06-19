@@ -26,16 +26,16 @@ public aspect Authentication {
 		return password;
 	}
 
-	public boolean authenticate(String login, String password) {
+	public void authenticate(String login, String password) throws AuthenticationException {
 		Collection<Person> people = Person.getPeople();
 		for (Iterator<Person> iterator = people.iterator(); iterator.hasNext();) {
 			Person person = (Person) iterator.next();
 			if (person.getLogin().equals(login) && person.getPassword().equals(password)) {
 				currentUser = person;
-				return true;
+				return;
 			}
 		}
-		return false;
+		throw new AuthenticationException();
 	}
 	
 	public void logoff() {
