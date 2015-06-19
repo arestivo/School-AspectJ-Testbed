@@ -3,6 +3,7 @@ package authentication;
 import java.util.Collection;
 import java.util.Iterator;
 
+import authentication.exceptions.AuthenticationException;
 import people.Person;
 
 public aspect Authentication {

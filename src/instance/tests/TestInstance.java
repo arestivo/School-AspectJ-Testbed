@@ -1,8 +1,8 @@
-package teaching.tests;
+package instance.tests;
 
+import instance.Instance;
+import instance.InstanceFactory;
 import junit.framework.TestCase;
-import teaching.Instance;
-import teaching.InstanceFactory;
 
 import com.feup.contribution.aida.annotations.PackageName;
 import com.feup.contribution.aida.annotations.TestFor;

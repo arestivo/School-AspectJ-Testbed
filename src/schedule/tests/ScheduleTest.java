@@ -2,6 +2,8 @@ package schedule.tests;
 
 import infrastructure.Room;
 import infrastructure.RoomFactory;
+import instance.Instance;
+import instance.InstanceFactory;
 
 import com.feup.contribution.aida.annotations.PackageName;
 import com.feup.contribution.aida.annotations.TestFor;
@@ -11,8 +13,6 @@ import people.PersonFactory;
 import people.Teacher;
 import schedule.Lecture;
 import schedule.LectureFactory;
-import teaching.Instance;
-import teaching.InstanceFactory;
 import courses.CourseFactory;
 
 @PackageName("schedule")

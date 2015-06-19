@@ -1,9 +1,9 @@
 package grading;
 
+import instance.Instance;
+
 import java.util.Collection;
 import java.util.LinkedList;
-
-import teaching.Instance;
 
 public class Evaluation {
 	public enum TYPE {EXAM, TEST};

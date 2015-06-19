@@ -1,6 +1,6 @@
 package grading;
 
-import teaching.Instance;
+import instance.Instance;
 
 public class EvaluationFactory {
 	public static Evaluation createEvaluation(Evaluation.TYPE type, int weight, Instance instance) {

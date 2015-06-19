@@ -1,5 +1,8 @@
 package grading.tests;
 
+import instance.Instance;
+import instance.InstanceFactory;
+
 import com.feup.contribution.aida.annotations.PackageName;
 import com.feup.contribution.aida.annotations.TestFor;
 
@@ -9,8 +12,6 @@ import grading.Evaluation;
 import grading.EvaluationFactory;
 import grading.Grade;
 import grading.GradeFactory;
-import teaching.Instance;
-import teaching.InstanceFactory;
 import courses.CourseFactory;
 import junit.framework.TestCase;
 

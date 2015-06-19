@@ -3,6 +3,8 @@ package people;
 import java.util.Collection;
 import java.util.HashMap;
 
+import people.exceptions.PersonAlreadyExists;
+
 public abstract class Person {
 	private static HashMap<Integer, Person> people = new HashMap<Integer, Person>();
 	private static int lastId = 0;

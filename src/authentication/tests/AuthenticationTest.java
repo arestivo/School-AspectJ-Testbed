@@ -5,7 +5,7 @@ import people.Administrator;
 import people.PersonFactory;
 import people.Student;
 import authentication.Authentication;
-import authentication.AuthenticationException;
+import authentication.exceptions.AuthenticationException;
 
 import com.feup.contribution.aida.annotations.PackageName;
 import com.feup.contribution.aida.annotations.TestFor;

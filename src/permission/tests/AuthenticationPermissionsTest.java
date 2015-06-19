@@ -4,9 +4,9 @@ import junit.framework.TestCase;
 import people.Administrator;
 import people.PersonFactory;
 import people.Student;
-import permission.PermissionException;
+import permission.exceptions.PermissionException;
 import authentication.Authentication;
-import authentication.AuthenticationException;
+import authentication.exceptions.AuthenticationException;
 
 import com.feup.contribution.aida.annotations.PackageName;
 import com.feup.contribution.aida.annotations.ReplaceTest;

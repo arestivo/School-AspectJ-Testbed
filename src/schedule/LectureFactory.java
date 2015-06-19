@@ -1,9 +1,9 @@
 package schedule;
 
 import infrastructure.Room;
+import instance.Instance;
 import people.Teacher;
 import schedule.Lecture.WEEKDAY;
-import teaching.Instance;
 
 public class LectureFactory {
 	public static Lecture createLecture(Teacher t, Room r, Instance i, WEEKDAY w, int h) {

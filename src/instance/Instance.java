@@ -1,4 +1,4 @@
-package teaching;
+package instance;
 
 import java.util.Collection;
 import java.util.HashSet;

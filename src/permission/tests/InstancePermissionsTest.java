@@ -1,13 +1,13 @@
 package permission.tests;
 
+import instance.Instance;
+import instance.InstanceFactory;
 import junit.framework.TestCase;
 import people.Administrator;
 import people.PersonFactory;
-import permission.PermissionException;
-import teaching.Instance;
-import teaching.InstanceFactory;
+import permission.exceptions.PermissionException;
 import authentication.Authentication;
-import authentication.AuthenticationException;
+import authentication.exceptions.AuthenticationException;
 
 import com.feup.contribution.aida.annotations.PackageName;
 import com.feup.contribution.aida.annotations.ReplaceTest;
@@ -19,7 +19,7 @@ import courses.CourseFactory;
 @TestFor("permission")
 public class InstancePermissionsTest extends TestCase {
 
-	@ReplaceTest("teaching.tests.TestInstance.testInstanceList")
+	@ReplaceTest("instance.tests.TestInstance.testInstanceList")
 	public void testCreateInstanceNoLogin() {
 		try {
 			InstanceFactory.createInstance(CourseFactory.createCourse("Programming 101"), 2010);
@@ -30,7 +30,7 @@ public class InstancePermissionsTest extends TestCase {
 		assertEquals(0, Instance.getInstances().size());
 	}
 		
-	@ReplaceTest("teaching.tests.TestInstance.testInstanceList")
+	@ReplaceTest("instance.tests.TestInstance.testInstanceList")
 	public void testCreateInstanceAdmin() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("Jonh", "103 St. James Street");
 		admin.setLogin("admin");

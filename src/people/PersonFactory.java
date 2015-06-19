@@ -1,5 +1,7 @@
 package people;
 
+import people.exceptions.PersonAlreadyExists;
+
 public class PersonFactory {
 	public static Teacher createTeacher(String name, String address) throws PersonAlreadyExists {
 		Teacher t = new Teacher(name, address);

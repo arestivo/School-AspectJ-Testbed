@@ -1,11 +1,11 @@
 package schedule;
 
 import infrastructure.Room;
+import instance.Instance;
 
 import java.util.HashSet; 
 
 import people.Teacher;
-import teaching.Instance;
 
 public class Lecture {
 	private static HashSet<Lecture> lectures = new HashSet<Lecture>();

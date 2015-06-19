@@ -1,16 +1,16 @@
 package permission.tests;
 
+import instance.Instance;
+import instance.InstanceFactory;
 import grading.Evaluation;
 import grading.EvaluationFactory;
 import junit.framework.TestCase;
 import people.Administrator;
 import people.PersonFactory;
 import people.Teacher;
-import permission.PermissionException;
-import teaching.Instance;
-import teaching.InstanceFactory;
+import permission.exceptions.PermissionException;
 import authentication.Authentication;
-import authentication.AuthenticationException;
+import authentication.exceptions.AuthenticationException;
 
 import com.feup.contribution.aida.annotations.PackageName;
 import com.feup.contribution.aida.annotations.ReplaceTest;

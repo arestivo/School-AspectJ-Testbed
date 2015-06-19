@@ -2,6 +2,8 @@ package permission;
 
 import infrastructure.Room;
 import infrastructure.RoomFactory;
+import instance.Instance;
+import instance.InstanceFactory;
 import grading.Evaluation;  
 import grading.EvaluationFactory;
 import authentication.Authentication;
@@ -10,8 +12,7 @@ import people.Person;
 import people.PersonFactory;
 import people.Student;
 import people.Teacher;
-import teaching.Instance;
-import teaching.InstanceFactory;
+import permission.exceptions.PermissionException;
 import courses.Course;
 import courses.CourseFactory;
 import grading.Grade;
