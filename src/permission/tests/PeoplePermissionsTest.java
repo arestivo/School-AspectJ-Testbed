@@ -17,7 +17,7 @@ import com.feup.contribution.aida.annotations.TestFor;
 @TestFor("permission")
 public class PeoplePermissionsTest extends TestCase {
 
-	@ReplaceTest("people.tests.TestPerson.testPersonList")
+	@ReplaceTest("people.tests.TestPerson.testCreatePeople,people.tests.TestPerson.testCreateStudent,people.tests.TestPerson.testCreateTeacher,people.tests.TestPerson.testCreateAdmin")
 	public void testCreatePeopleNoLogin() {		
 		Administrator admin = PersonFactory.createAdministrator("Jonh", "103 St. James Street");
 		admin.setLogin("admin");
@@ -47,7 +47,7 @@ public class PeoplePermissionsTest extends TestCase {
 		assertEquals(1, Person.getPeople().size());
 	}
 	
-	@ReplaceTest("people.tests.TestPerson.testPersonList")
+	@ReplaceTest("people.tests.TestPerson.testCreatePeople,people.tests.TestPerson.testCreateStudent,people.tests.TestPerson.testCreateTeacher,people.tests.TestPerson.testCreateAdmin")
 	public void testCreatePeopleStudent() throws AuthenticationException {		
 		Administrator admin = PersonFactory.createAdministrator("Jonh", "103 St. James Street");
 		admin.setLogin("admin");
@@ -85,7 +85,7 @@ public class PeoplePermissionsTest extends TestCase {
 		assertEquals(2, Person.getPeople().size());
 	}	
 	
-	@ReplaceTest("people.tests.TestPerson.testPersonList")
+	@ReplaceTest("people.tests.TestPerson.testCreatePeople,people.tests.TestPerson.testCreateStudent,people.tests.TestPerson.testCreateTeacher,people.tests.TestPerson.testCreateAdmin")
 	public void testCreatePeopleAdmin() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("Jonh", "103 St. James Street");
 		admin.setLogin("admin");
