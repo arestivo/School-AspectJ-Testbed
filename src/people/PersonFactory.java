@@ -1,21 +1,21 @@
 package people;
 
 public class PersonFactory {
-	public static Teacher createTeacher(String name, String address) {
+	public static Teacher createTeacher(String name, String address) throws PersonAlreadyExists {
 		Teacher t = new Teacher(name, address);
-		if (!Person.addPerson(t)) return null;
+		Person.addPerson(t);
 		return t;
 	}	
 
-	public static Student createStudent(String name, String address) {
+	public static Student createStudent(String name, String address) throws PersonAlreadyExists {
 		Student s = new Student(name, address);
-		if (!Person.addPerson(s)) return null;
+		Person.addPerson(s);
 		return s;
 	}	
 
-	public static Administrator createAdministrator(String name, String address) {
+	public static Administrator createAdministrator(String name, String address) throws PersonAlreadyExists {
 		Administrator a = new Administrator(name, address);
-		if (!Person.addPerson(a)) return null;
+		Person.addPerson(a);
 		return a;
 	}	
 }

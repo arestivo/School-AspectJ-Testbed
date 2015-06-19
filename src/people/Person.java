@@ -1,11 +1,11 @@
 package people;
 
-import java.util.Collection; 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Random;
 
 public abstract class Person {
 	private static HashMap<Integer, Person> people = new HashMap<Integer, Person>();
+	private static int lastId = 0;
 	
 	private String name;
 	private String address;
@@ -13,16 +13,13 @@ public abstract class Person {
 
 	public Person(String name, String address) {
 		this.name = name;
-		this.address = address;		
+		this.address = address;
 		this.setId(generateId());
 	}
 	
-	private int generateId() {
-		while (true) {
-			Random r = new Random();
-			int id = r.nextInt();
-			if (!people.containsKey(new Integer(id))) return id;
-		}
+	private synchronized int generateId() {
+		while (true)
+			if (!people.containsKey(new Integer(++lastId))) return lastId;
 	}
 
 	public void setName(String name) {
@@ -41,10 +38,9 @@ public abstract class Person {
 		return address;
 	}
 
-	public static boolean addPerson(Person p) {
-		if (people.containsKey(p.getId())) return false;
+	public static void addPerson(Person p) {
+		if (people.containsKey(p.getId())) throw new PersonAlreadyExists();
 		people.put(new Integer(p.getId()), p);
-		return true;
 	}
 
 	public static Collection<Person> getPeople() {
