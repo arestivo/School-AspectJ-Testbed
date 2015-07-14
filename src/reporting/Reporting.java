@@ -2,22 +2,37 @@ package reporting;
 
 import grading.Evaluation;
 import grading.Grade;
-import people.Person;
+import instance.Instance;
+
+import java.util.Collection;
+import java.util.Iterator;
+
 import people.Student;
 
 public class Reporting {
-	public void getStudentList() {
+	public static String getStudentList(Instance instance) {
 		String list = "";
-		for (Person person : Person.getPeople()) {
-			if (person instanceof Student) list += person.getName() + "\n";
+
+		Collection<Student> students = instance.getStudents();
+		
+		for (Iterator<Student> iterator = students.iterator(); iterator.hasNext();) {
+			Student student = (Student) iterator.next();
+			list += student.getName() + "\n";
 		}
+		
+		return list;
 	}
 
-	public void getEvaluationGrades(Evaluation a) {
+	public static String getGrades(Evaluation evaluation) {
 		String list = "";
-		for (Grade grade : Grade.getGrades(a)) {
-			list += grade.getStudent().getName() + " : " + grade.getGrade() + "\n";
+		
+		Collection<Grade> grades = Grade.getGrades(evaluation);
+
+		for (Grade grade : grades) {
+			list += grade.getStudent().getName() + " = " + grade.getGrade() + "\n";
 		}
+		
+		return list;
 	}
 
 }
