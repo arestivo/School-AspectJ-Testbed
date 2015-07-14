@@ -60,4 +60,12 @@ public class Instance {
 	public void removeTeacher(Teacher t) {
 		teachers.remove(t);
 	}
+	
+	public Collection<Student> getStudents() {
+		return students;
+	}
+
+	public Collection<Teacher> getTeachers() {
+		return teachers;
+	}
 }
