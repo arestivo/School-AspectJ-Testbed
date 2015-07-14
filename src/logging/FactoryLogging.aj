@@ -20,7 +20,7 @@ public aspect FactoryLogging {
 		}  
 	}
 
-	pointcut objectCreated() : call (public * *Factory.*(..));
+	pointcut objectCreated() : execution(public * *.create*(..));
 	
 	after() returning(Object object) : objectCreated() {
 		log.log(Level.INFO, object.getClass().getName() + ": " + object + " created.");

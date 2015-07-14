@@ -35,4 +35,21 @@ public class Reporting {
 		return list;
 	}
 
+	public static String getGrades(Instance instance) {
+		String list = "";
+		
+		Collection<Student> students = instance.getStudents();
+
+		for (Student student : students) {
+			list += student.getName() + ",";
+			Collection<Grade> grades = Grade.getGrades(student);			
+			for (Grade grade : grades) {
+				list += grade.getGrade() + ",";
+			}
+			list += "\n";
+		}
+		
+		return list;
+	}
+
 }

@@ -7,7 +7,8 @@ import java.util.LinkedList;
 import people.Student;
 
 public class Grade {
-	private static HashMap<Evaluation, LinkedList<Grade>> grades = new HashMap<Evaluation, LinkedList<Grade>>();
+	private static HashMap<Evaluation, LinkedList<Grade>> evaluationGrades = new HashMap<Evaluation, LinkedList<Grade>>();
+	private static HashMap<Student, LinkedList<Grade>> studentGrades = new HashMap<Student, LinkedList<Grade>>();
 
 	private Evaluation evaluation;
 
@@ -46,11 +47,19 @@ public class Grade {
 	}
 
 	public static void addGrade(Grade g) {
-		if (!grades.containsKey(g.getEvaluation())) grades.put(g.evaluation, new LinkedList<Grade>());
-		grades.get(g.getEvaluation()).add(g);
+		if (!evaluationGrades.containsKey(g.getEvaluation())) evaluationGrades.put(g.evaluation, new LinkedList<Grade>());
+		evaluationGrades.get(g.getEvaluation()).add(g);
+
+		if (!studentGrades.containsKey(g.getStudent())) studentGrades.put(g.student, new LinkedList<Grade>());
+		studentGrades.get(g.getStudent()).add(g);
 	}
 
 	public static Collection<Grade> getGrades(Evaluation a) {
-		return (grades.get(a));
+		return (evaluationGrades.get(a));
 	}
+
+	public static Collection<Grade> getGrades(Student s) {
+		return (studentGrades.get(s));
+	}
+
 }
