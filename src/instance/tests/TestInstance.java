@@ -9,8 +9,8 @@ import com.feup.contribution.aida.annotations.TestFor;
 
 import courses.CourseFactory;
 
-@PackageName("teaching")
-@TestFor("teaching")
+@PackageName("instance")
+@TestFor("instance")
 public class TestInstance extends TestCase {
 	public void testInstanceList() {
 		assertEquals(0, Instance.getInstances().size());
