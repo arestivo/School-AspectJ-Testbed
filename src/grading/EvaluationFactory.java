@@ -6,7 +6,6 @@ public class EvaluationFactory {
 	public static Evaluation createEvaluation(Evaluation.TYPE type, int weight, Instance instance) {
 		Evaluation evaluation = new Evaluation(type, weight, instance);
 		Evaluation.addEvaluation(evaluation);
-		instance.addEvaluation(evaluation);
 		return evaluation;
 	}
 }

@@ -1,7 +1,5 @@
 package instance;
 
-import grading.Evaluation;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -14,7 +12,6 @@ public class Instance {
 	private Course subject;
 	private Collection<Teacher> teachers = new HashSet<Teacher>();
 	private Collection<Student> students = new HashSet<Student>();
-	private Collection<Evaluation> evaluations = new HashSet<Evaluation>();
 	private int year;
 	
 	private static Collection<Instance> instances = new LinkedList<Instance>();
@@ -64,19 +61,11 @@ public class Instance {
 		teachers.remove(t);
 	}
 	
-	public void addEvaluation(Evaluation evaluation) {
-		evaluations.add(evaluation);
-	}
-
 	public Collection<Student> getStudents() {
 		return students;
 	}
 
 	public Collection<Teacher> getTeachers() {
 		return teachers;
-	}
-
-	public Collection<Evaluation> getEvaluations() {
-		return evaluations;
 	}
 }
