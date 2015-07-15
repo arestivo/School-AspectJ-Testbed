@@ -1,5 +1,7 @@
 package grading;
 
+import instance.Instance;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -62,4 +64,26 @@ public class Grade {
 		return (studentGrades.get(s));
 	}
 
+	@Override
+	public String toString() {
+		return String.valueOf(grade);
+	}
+
+	public static String getFinalResult(Instance instance, Student student) {
+		Collection<Grade> grades = getGrades(student);
+
+		int totalWeight = 0;
+		int totalSum = 0;
+		
+		for (Grade grade : grades) {
+			if (grade.getEvaluation().getInstance() == instance) {
+				totalSum += grade.getGrade() * grade.getEvaluation().getWeight();
+				totalWeight += grade.getEvaluation().getWeight();
+			}
+		}
+		
+		if (totalWeight == 0) return "E";
+		
+		return String.valueOf(totalSum / totalWeight);
+	}
 }
