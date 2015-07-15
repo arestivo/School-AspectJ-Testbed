@@ -10,7 +10,7 @@ public aspect FactoryLogging {
 
 	static {
 		try {  
-	        FileHandler fh = new FileHandler("school.log");  
+	        FileHandler fh = new FileHandler("%t/school.log");  
 	        log.addHandler(fh);
 	        SimpleFormatter formatter = new SimpleFormatter();  
 	        fh.setFormatter(formatter);  

@@ -4,6 +4,7 @@ import instance.Instance;
 import instance.InstanceFactory;
 import grading.Evaluation;
 import grading.EvaluationFactory;
+import grading.Grade;
 import grading.GradeFactory;
 import junit.framework.TestCase;
 import people.Administrator;
@@ -124,7 +125,7 @@ public class GradingPermissionsTest extends TestCase {
 		}
 	}
 	
-	@ReplaceTest("grading.tests.TestGrade.testGrade")
+	@ReplaceTest("grading.tests.TestGrade.testGrade,grading.tests.TestGrade.testFinalResult")
 	public void testCreateGradeInstanceTeacher() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
 		admin.setLogin("admin");
@@ -150,5 +151,42 @@ public class GradingPermissionsTest extends TestCase {
 		
 		GradeFactory.createGrade(a1, student, 10);
 		GradeFactory.createGrade(a2, student, 10);
+
+		assertEquals(String.valueOf((20 * 10 + 30 * 10)/50), Grade.getFinalResult(i, student));
 	}	
+
+	@ReplaceTest("minimumgrade.tests.TestMinimumGrade.testMinimumGrade")
+	public void testMinimumGrade() throws AuthenticationException {
+		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
+		admin.setLogin("admin");
+		admin.setPassword("1234");
+
+		Authentication.aspectOf().authenticate("admin", "1234");
+		
+		Student student = PersonFactory.createStudent("John", "124 St Something Street");
+		student.setLogin("mary");
+		student.setPassword("1234");
+		
+		Teacher t = PersonFactory.createTeacher("John", "104 St Saint Street");
+		t.setLogin("john");
+		t.setPassword("1234");
+		
+		Instance i = InstanceFactory.createInstance(CourseFactory.createCourse("Programmin 101"), 2010);
+		i.addTeacher(t);
+
+		Authentication.aspectOf().authenticate("john", "1234");
+
+		Evaluation a1 = EvaluationFactory.createEvaluation(Evaluation.TYPE.EXAM, 20, i);
+		Evaluation a2 = EvaluationFactory.createEvaluation(Evaluation.TYPE.TEST, 30, i);
+		
+		GradeFactory.createGrade(a1, student, 10);
+		GradeFactory.createGrade(a2, student, 10);
+
+		a1.setMinimumGrade(8);
+		assertEquals(String.valueOf((20 * 10 + 30 * 10)/50), Grade.getFinalResult(i, student));
+
+		a2.setMinimumGrade(12);
+		assertEquals("M", Grade.getFinalResult(i, student));
+	}	
+
 }
