@@ -9,7 +9,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 public class PasswordUtil {
-	private static int ITERATIONS = 1;
+	private static int ITERATIONS = 1000;
 
 	public static String generatePassword(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
 		char[] chars = password.toCharArray();
