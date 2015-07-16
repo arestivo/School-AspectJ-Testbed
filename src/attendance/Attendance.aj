@@ -6,7 +6,7 @@ import java.util.List;
 import com.feup.contribution.aida.annotations.PackageName;
 
 import people.Student;
-import schedule.Lecture;
+import schedule.Lecture;;
 
 @PackageName("attendance")
 public aspect Attendance {
@@ -15,4 +15,12 @@ public aspect Attendance {
 	public void Lecture.addAttendance(Student student) {
 		attendees.add(student);
 	}
+
+	public void Lecture.removeAttendance(Student student) {
+		attendees.remove(student);
+	}
+	
+	public boolean Lecture.hasAttended(Student student) {
+		return attendees.contains(student);
+	}	
 }

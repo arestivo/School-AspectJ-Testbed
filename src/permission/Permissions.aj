@@ -17,6 +17,8 @@ import courses.Course;
 import courses.CourseFactory;
 import grading.Grade;
 import grading.GradeFactory;
+import schedule.Schedule;
+import schedule.ScheduleFactory;
 import schedule.Lecture;
 import schedule.LectureFactory;
 
@@ -27,7 +29,10 @@ public aspect Permissions {
 	pointcut createTeacher() : call(Teacher PersonFactory.createTeacher(..));
 	pointcut createStudent() : call(Student PersonFactory.createStudent(..));
 	pointcut createInstance() : call(Instance InstanceFactory.createInstance(..));
-	pointcut createLecture() : call(Lecture LectureFactory.createLecture(..));
+	pointcut createSchedule() : call(Schedule ScheduleFactory.createSchedule(..));
+	pointcut createLecture(Schedule schedule) : call(Lecture LectureFactory.createLecture(Schedule, int)) && args(schedule, ..);
+	pointcut changeLectureState(Lecture lecture) : call(void Lecture.cancel()) && target(lecture) || call(void Lecture.present()) && target(lecture) ;
+	pointcut changeAttendanceState(Lecture lecture) : call(void Lecture.addAttendance(..)) && target(lecture) || call(void Lecture.removeAttendance(..)) && target(lecture) ;
 	pointcut createEvaluation(Evaluation.TYPE type, int weight, Instance instance) 
 	: call(Evaluation EvaluationFactory.createEvaluation(Evaluation.TYPE, int, Instance)) && args(type, weight, instance);
 	pointcut createGrade(Evaluation evaluation, Student student, int grade) 
@@ -89,12 +94,42 @@ public aspect Permissions {
 		return proceed(evaluation, student, grade);
 	}
 
-	Lecture around() : createLecture() {
+	Schedule around() : createSchedule() {
 		if (Authentication.aspectOf().getCurrentUser() == null) throw new PermissionException(PermissionException.NEEDS_LOGIN);
 		if (!(Authentication.aspectOf().getCurrentUser() instanceof Administrator)) throw new PermissionException(PermissionException.NEEDS_ADMIN);
 		return proceed();
 	}
 
+	Lecture around(Schedule schedule) : createLecture(schedule) {
+		if (Authentication.aspectOf().getCurrentUser() == null) throw new PermissionException(PermissionException.NEEDS_LOGIN);
+		if (!(Authentication.aspectOf().getCurrentUser() instanceof Teacher)) throw new PermissionException(PermissionException.NEEDS_TEACHER);
+
+		Instance instance = schedule.getInstance();
+		if (!instance.hasTeacher((Teacher) Authentication.aspectOf().getCurrentUser())) throw new PermissionException(PermissionException.NEEDS_INSTANCE_TEACHER);
+
+		return proceed(schedule);
+	}
+
+	void around(Lecture lecture) : changeLectureState(lecture) {
+		if (Authentication.aspectOf().getCurrentUser() == null) throw new PermissionException(PermissionException.NEEDS_LOGIN);
+		if (!(Authentication.aspectOf().getCurrentUser() instanceof Teacher)) throw new PermissionException(PermissionException.NEEDS_TEACHER);
+
+		Instance instance = lecture.getSchedule().getInstance();
+		if (!instance.hasTeacher((Teacher) Authentication.aspectOf().getCurrentUser())) throw new PermissionException(PermissionException.NEEDS_INSTANCE_TEACHER);
+
+		proceed(lecture);
+	}
+
+	void around(Lecture lecture) : changeAttendanceState(lecture) {
+		if (Authentication.aspectOf().getCurrentUser() == null) throw new PermissionException(PermissionException.NEEDS_LOGIN);
+		if (!(Authentication.aspectOf().getCurrentUser() instanceof Teacher)) throw new PermissionException(PermissionException.NEEDS_TEACHER);
+
+		Instance instance = lecture.getSchedule().getInstance();
+		if (!instance.hasTeacher((Teacher) Authentication.aspectOf().getCurrentUser())) throw new PermissionException(PermissionException.NEEDS_INSTANCE_TEACHER);
+
+		proceed(lecture);
+	}
+	
 	void around() : changePassword() {
 		if (Person.getPeople().size()==1) 
 			proceed();

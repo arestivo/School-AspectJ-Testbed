@@ -10,8 +10,8 @@ import people.PersonFactory;
 import people.Student;
 import people.Teacher;
 import permission.exceptions.PermissionException;
-import schedule.Lecture;
-import schedule.LectureFactory;
+import schedule.Schedule;
+import schedule.ScheduleFactory;
 import authentication.Authentication;
 import authentication.exceptions.AuthenticationException;
 
@@ -39,7 +39,7 @@ public class SchedulePermissionsTest extends TestCase {
 		
 		Authentication.aspectOf().logoff();
 		try {
-			LectureFactory.createLecture(teacher, room, i, Lecture.WEEKDAY.MONDAY, 10);
+			ScheduleFactory.createSchedule(teacher, room, i, Schedule.WEEKDAY.MONDAY, 10);
 			fail("Missing Exception");
 		} catch (PermissionException e) {
 			assertEquals(PermissionException.NEEDS_LOGIN, e.getMessage());						
@@ -65,7 +65,7 @@ public class SchedulePermissionsTest extends TestCase {
 		
 		Authentication.aspectOf().authenticate("john", "1234");
 		try {
-			LectureFactory.createLecture(teacher, room, i, Lecture.WEEKDAY.MONDAY, 10);
+			ScheduleFactory.createSchedule(teacher, room, i, Schedule.WEEKDAY.MONDAY, 10);
 			fail("Missing Exception");
 		} catch (PermissionException e) {
 			assertEquals(PermissionException.NEEDS_ADMIN, e.getMessage());			
@@ -89,7 +89,7 @@ public class SchedulePermissionsTest extends TestCase {
 		
 		Authentication.aspectOf().authenticate("mary", "1234");
 		try {
-			LectureFactory.createLecture(teacher, room, i, Lecture.WEEKDAY.MONDAY, 10);
+			ScheduleFactory.createSchedule(teacher, room, i, Schedule.WEEKDAY.MONDAY, 10);
 			fail("Missing Exception");
 		} catch (PermissionException e) {
 			assertEquals(PermissionException.NEEDS_ADMIN, e.getMessage());						
@@ -110,6 +110,6 @@ public class SchedulePermissionsTest extends TestCase {
 		Instance i = InstanceFactory.createInstance(CourseFactory.createCourse("Programming 101"), 2010);
 
 		Authentication.aspectOf().authenticate("admin", "1234");
-		assertNotNull(LectureFactory.createLecture(teacher, room, i, Lecture.WEEKDAY.MONDAY, 10));
+		assertNotNull(ScheduleFactory.createSchedule(teacher, room, i, Schedule.WEEKDAY.MONDAY, 10));
 	}
 }

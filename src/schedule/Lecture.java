@@ -1,76 +1,36 @@
 package schedule;
 
-import infrastructure.Room;
-import instance.Instance;
-
-import java.util.HashSet; 
-
-import people.Teacher;
 
 public class Lecture {
-	private static HashSet<Lecture> lectures = new HashSet<Lecture>();
+	public enum STATE {SCHEDULED, PRESENTED, CANCELED};
 	
-	public enum WEEKDAY {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY};
+	private Schedule schedule;
+	private STATE state;
+	private int number;
 	
-	private Teacher teacher;
-
-	private Instance instance;
-	
-	private Room room;
-	
-	private WEEKDAY day;
-
-	private int hour;
-
-	protected Lecture(Teacher t, Room r, Instance i, WEEKDAY w, int h) {
-		teacher = t;
-		room = r;
-		instance = i;
-		day = w;
-		hour = h;
-	}
-	
-	public void setTeacher(Teacher teacher) {
-		this.teacher = teacher;
+	public Lecture(Schedule schedule, int number) {
+		this.schedule = schedule;
+		this.number = number;
+		this.state = STATE.SCHEDULED;
 	}
 
-	public Teacher getTeacher() {
-		return teacher;
+	public Schedule getSchedule() {
+		return schedule;
 	}
 
-	public void setInstance(Instance instance) {
-		this.instance = instance;
-	}
-	
-	public Instance getInstance() {
-		return instance;
+	public STATE getState() {
+		return state;
 	}
 
-	public void setRoom(Room room) {
-		this.room = room;
+	public void cancel() {
+		this.state = STATE.CANCELED;
 	}
 
-	public Room getRoom() {
-		return room;
+	public void present() {
+		this.state = STATE.PRESENTED;
 	}
 
-	public void setHour(int hour) {
-		this.hour = hour;
-	}
-
-	public int getHour() {
-		return hour;
-	}
-
-	public void setDay(WEEKDAY day) {
-		this.day = day;
-	}
-
-	public WEEKDAY getDay() {
-		return day;
-	}
-
-	public static void addLecture(Lecture l) {
-		lectures.add(l);
+	public int getNumber() {
+		return number;
 	}
 }
