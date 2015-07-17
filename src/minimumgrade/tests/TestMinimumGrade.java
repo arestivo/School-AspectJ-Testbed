@@ -23,7 +23,6 @@ public class TestMinimumGrade extends TestCase {
 		Evaluation a = EvaluationFactory.createEvaluation(Evaluation.TYPE.EXAM, 20, i);
 		Student s = PersonFactory.createStudent("Jonh", "132 St. James Street");
 
-		
 		GradeFactory.createGrade(a, s, 8);
 
 		assertEquals("8", Grade.getFinalResult(i, s));
