@@ -20,7 +20,7 @@ import courses.CourseFactory;
 @PackageName("schedule")
 @TestFor("schedule")
 public class LectureTest extends TestCase {
-	public void testLecture() {
+	public void testCreateLecture() {
 		Teacher t = PersonFactory.createTeacher("Jonh", "125 St Something Street");
 		Room r = RoomFactory.createRoom(103);
 		

@@ -25,7 +25,7 @@ import courses.CourseFactory;
 @PackageName("permission")
 @TestFor("permission")
 public class LecturePermissionsTest extends TestCase {
-	@ReplaceTest("schedule.tests.LectureTest.testLecture")
+	@ReplaceTest("schedule.tests.LectureTest.testCreateLecture")
 	public void testCreateLectureNoLogin() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
 		admin.setLogin("admin");
@@ -49,7 +49,7 @@ public class LecturePermissionsTest extends TestCase {
 		}
 	}
 
-	@ReplaceTest("schedule.tests.LectureTest.testLecture")
+	@ReplaceTest("schedule.tests.LectureTest.testCreateLecture")
 	public void testChangeLectureState() {
 		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
 		admin.setLogin("admin");
