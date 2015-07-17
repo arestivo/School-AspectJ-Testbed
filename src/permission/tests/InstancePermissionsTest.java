@@ -19,7 +19,7 @@ import courses.CourseFactory;
 @TestFor("permission")
 public class InstancePermissionsTest extends TestCase {
 
-	@ReplaceTest("instance.tests.TestInstance.testInstanceList")
+	@ReplaceTest("instance.tests.TestInstance.testCreateInstance")
 	public void testCreateInstanceNoLogin() {
 		try {
 			InstanceFactory.createInstance(CourseFactory.createCourse("Programming 101"), 2010);
@@ -30,7 +30,7 @@ public class InstancePermissionsTest extends TestCase {
 		assertEquals(0, Instance.getInstances().size());
 	}
 		
-	@ReplaceTest("instance.tests.TestInstance.testInstanceList")
+	@ReplaceTest("instance.tests.TestInstance.testCreateInstance")
 	public void testCreateInstanceAdmin() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("Jonh", "103 St. James Street");
 		admin.setLogin("admin");

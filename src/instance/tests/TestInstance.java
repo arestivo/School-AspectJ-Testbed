@@ -12,7 +12,7 @@ import courses.CourseFactory;
 @PackageName("instance")
 @TestFor("instance")
 public class TestInstance extends TestCase {
-	public void testInstanceList() {
+	public void testCreateInstance() {
 		assertEquals(0, Instance.getInstances().size());
 		InstanceFactory.createInstance(CourseFactory.createCourse("Programming 101"), 2010);
 		assertEquals(1, Instance.getInstances().size());
