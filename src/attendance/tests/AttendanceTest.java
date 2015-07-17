@@ -22,7 +22,7 @@ import courses.CourseFactory;
 @TestFor("attendance")
 public class AttendanceTest extends TestCase {
 
-	public void testAttendance() {
+	public void testAddAttendance() {
 		Teacher t = PersonFactory.createTeacher("Jonh", "125 St Something Street");
 		Room r = RoomFactory.createRoom(103);
 		
@@ -47,11 +47,28 @@ public class AttendanceTest extends TestCase {
 
 		assertTrue(l.hasAttended(s1));
 		assertTrue(l.hasAttended(s2));
+	}
+
+	public void testRemoveAttendance() {
+		Teacher t = PersonFactory.createTeacher("Jonh", "125 St Something Street");
+		Room r = RoomFactory.createRoom(103);
+		
+		Student s1 = PersonFactory.createStudent("Carl", "125 St Something Street");
+		Student s2 = PersonFactory.createStudent("Mary", "125 St Something Street");
+		
+		Instance i = InstanceFactory.createInstance(CourseFactory.createCourse("Programming 101"), 2010);
+		
+		Schedule s = ScheduleFactory.createSchedule(t, r, i, Schedule.WEEKDAY.MONDAY, 10);
+
+		Lecture l = LectureFactory.createLecture(s, 1);
+		
+		l.addAttendance(s1);
+		l.addAttendance(s2);
 
 		l.removeAttendance(s1);
-
 		assertFalse(l.hasAttended(s1));
 		assertTrue(l.hasAttended(s2));
-}
-
+	}
+	
+	
 }

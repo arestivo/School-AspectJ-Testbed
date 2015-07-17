@@ -26,7 +26,7 @@ import courses.CourseFactory;
 @PackageName("permission")
 @TestFor("permission")
 public class AttendancePermissionsTest extends TestCase {
-	@ReplaceTest("attendance.tests.AttendanceTest.testAttendance")
+	@ReplaceTest("attendance.tests.AttendanceTest.testAddAttendance,attendance.tests.AttendanceTest.testRemoveAttendance")
 	public void testAttendaceNoLogin() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
 		admin.setLogin("admin");
