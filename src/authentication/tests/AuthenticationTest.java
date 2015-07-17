@@ -14,6 +14,15 @@ import com.feup.contribution.aida.annotations.TestFor;
 @TestFor("authentication")
 public class AuthenticationTest extends TestCase {
 
+	public void testSetCredentials() {
+		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
+		admin.setLogin("admin");
+		admin.setPassword("1234");
+		
+		assertEquals("admin", admin.getLogin());
+		assertEquals("1234", admin.getPassword());
+	}
+	
 	public void testAuthenticate() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
 		admin.setLogin("admin");
