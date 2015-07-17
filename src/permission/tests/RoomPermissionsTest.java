@@ -18,7 +18,7 @@ import com.feup.contribution.aida.annotations.TestFor;
 @TestFor("permission")
 public class RoomPermissionsTest extends TestCase {
 	
-	@ReplaceTest("infrastructure.tests.RoomTest.testRoomList")
+	@ReplaceTest("infrastructure.tests.RoomTest.testCreateRoom")
 	public void testCreateRoomNoLogin() {
 		try {
 			RoomFactory.createRoom(100);
@@ -28,7 +28,7 @@ public class RoomPermissionsTest extends TestCase {
 		}
 	}
 	
-	@ReplaceTest("infrastructure.tests.RoomTest.testRoomList")
+	@ReplaceTest("infrastructure.tests.RoomTest.testCreateRoom")
 	public void testCreateRoomStudent() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
 		admin.setLogin("admin");
@@ -50,7 +50,7 @@ public class RoomPermissionsTest extends TestCase {
 		}
 	}
 	
-	@ReplaceTest("infrastructure.tests.RoomTest.testRoomList")
+	@ReplaceTest("infrastructure.tests.RoomTest.testCreateRoom")
 	public void testCreateRoomTeacher() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
 		admin.setLogin("admin");
@@ -72,7 +72,7 @@ public class RoomPermissionsTest extends TestCase {
 		}		
 	}
 	
-	@ReplaceTest("infrastructure.tests.RoomTest.testRoomList")
+	@ReplaceTest("infrastructure.tests.RoomTest.testCreateRoom")
 	public void testCreateRoomAdmin() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
 		admin.setLogin("admin");

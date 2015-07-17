@@ -10,7 +10,7 @@ import com.feup.contribution.aida.annotations.TestFor;
 @PackageName("infrastructure")
 @TestFor("infrastructure")
 public class RoomTest extends TestCase {
-	public void testRoomList(){
+	public void testCreateRoom(){
 		assertEquals(0, Room.getRooms().size());
 		RoomFactory.createRoom(100);
 		assertEquals(1, Room.getRooms().size());
