@@ -29,4 +29,12 @@ public class Course{
 	public static Collection<Course> getCourses() {
 		return courses.values();
 	}
+
+	public static Course getCourse(String name) {
+		return courses.get(name);
+	}
+	
+	public static void removeCourse(Course course) {
+		courses.remove(course.getName());
+	}
 }

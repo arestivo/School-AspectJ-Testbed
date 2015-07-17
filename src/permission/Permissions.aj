@@ -25,6 +25,7 @@ import schedule.LectureFactory;
 public aspect Permissions {
 	pointcut createRoom() : call(Room RoomFactory.createRoom(..));
 	pointcut createCourse() : call(Course CourseFactory.createCourse(..));
+	pointcut removeCourse() : call(void Course.removeCourse(..));
 	pointcut createAdministrator() : call(Administrator PersonFactory.createAdministrator(..));
 	pointcut createTeacher() : call(Teacher PersonFactory.createTeacher(..));
 	pointcut createStudent() : call(Student PersonFactory.createStudent(..));
@@ -52,6 +53,12 @@ public aspect Permissions {
 		return proceed();
 	}
 
+	void around() : removeCourse() {
+		if (Authentication.aspectOf().getCurrentUser() == null) throw new PermissionException(PermissionException.NEEDS_LOGIN);
+		if (!(Authentication.aspectOf().getCurrentUser() instanceof Administrator))  throw new PermissionException(PermissionException.NEEDS_ADMIN);
+		proceed();
+	}
+	
 	Administrator around() : createAdministrator() {
 		if (Person.getPeople().size()==0) return proceed();
 		if (Authentication.aspectOf().getCurrentUser() == null) throw new PermissionException(PermissionException.NEEDS_LOGIN);

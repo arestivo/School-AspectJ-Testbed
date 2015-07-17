@@ -13,13 +13,14 @@ import com.feup.contribution.aida.annotations.PackageName;
 import com.feup.contribution.aida.annotations.ReplaceTest;
 import com.feup.contribution.aida.annotations.TestFor;
 
+import courses.Course;
 import courses.CourseFactory;
 
 @PackageName("permission")
 @TestFor("permission")
 public class CoursePermissionsTest extends TestCase {
 
-	@ReplaceTest("courses.tests.CourseTest.testCourseList")
+	@ReplaceTest("courses.tests.CourseTest.testCreateCourse")
 	public void testCreateCourseNoLogin() {
 		try {
 			CourseFactory.createCourse("Programming 101");
@@ -28,8 +29,27 @@ public class CoursePermissionsTest extends TestCase {
 			assertEquals(PermissionException.NEEDS_LOGIN, e.getMessage());
 		}
 	}
+
+	@ReplaceTest("courses.tests.CourseTest.testRemoveCourse")
+	public void testRemoveCourseNoLogin() {
+		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
+
+		admin.setLogin("admin");
+		admin.setPassword("1234");
+		
+		Authentication.aspectOf().authenticate("admin", "1234");
+		Course course = CourseFactory.createCourse("Programming 101");
+		Authentication.aspectOf().logoff();
+
+		try {
+			Course.removeCourse(course);
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_LOGIN, e.getMessage());
+		}
+	}
 	
-	@ReplaceTest("courses.tests.CourseTest.testCourseList")
+	@ReplaceTest("courses.tests.CourseTest.testCreateCourse")
 	public void testCreateCourseStudent() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
 
@@ -51,7 +71,7 @@ public class CoursePermissionsTest extends TestCase {
 		}
 	}
 	
-	@ReplaceTest("courses.tests.CourseTest.testCourseList")
+	@ReplaceTest("courses.tests.CourseTest.testCreateCourse")
 	public void testCreateCourseTeacher() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
 
@@ -73,7 +93,7 @@ public class CoursePermissionsTest extends TestCase {
 		}
 	}
 	
-	@ReplaceTest("courses.tests.CourseTest.testCourseList")
+	@ReplaceTest("courses.tests.CourseTest.testCreateCourse")
 	public void testCreateCourseAdmin() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
 	
@@ -83,5 +103,19 @@ public class CoursePermissionsTest extends TestCase {
 		Authentication.aspectOf().authenticate("admin", "1234");
 
 		assertNotNull(CourseFactory.createCourse("Programming 101"));
+	}
+
+	@ReplaceTest("courses.tests.CourseTest.testRemoveCourse")
+	public void testRemoveCourseAdmin() throws AuthenticationException {
+		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
+	
+		admin.setLogin("admin");
+		admin.setPassword("1234");
+
+		Authentication.aspectOf().authenticate("admin", "1234");
+
+		Course course = CourseFactory.createCourse("Programming 101");
+		Course.removeCourse(course);
+		assertNull(Course.getCourse("Programming 101"));
 	}
 }
