@@ -5,6 +5,7 @@ import people.Administrator;
 import people.Person;
 import people.PersonFactory;
 import people.Student;
+import people.Teacher;
 import permission.exceptions.PermissionException;
 import authentication.Authentication;
 import authentication.exceptions.AuthenticationException;
@@ -84,6 +85,44 @@ public class PeoplePermissionsTest extends TestCase {
 
 		assertEquals(2, Person.getPeople().size());
 	}	
+
+	@ReplaceTest("people.tests.TestPerson.testCreatePeople,people.tests.TestPerson.testCreateStudent,people.tests.TestPerson.testCreateTeacher,people.tests.TestPerson.testCreateAdmin")
+	public void testCreatePeopleTeacher() throws AuthenticationException {		
+		Administrator admin = PersonFactory.createAdministrator("Jonh", "103 St. James Street");
+		admin.setLogin("admin");
+		admin.setPassword("1234");
+		
+		Authentication.aspectOf().authenticate("admin", "1234");
+
+		Teacher teacher = PersonFactory.createTeacher("John", "103 St. James Street");
+		teacher.setLogin("john");
+		teacher.setPassword("1234");
+
+		Authentication.aspectOf().authenticate("john", "1234");
+		
+		try {
+			PersonFactory.createAdministrator("Jonh", "103 St. James Street");
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_ADMIN, e.getMessage());
+		}
+		
+		try {
+			PersonFactory.createStudent("Jonh", "103 St. James Street");
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_ADMIN, e.getMessage());
+		}
+	
+		try {
+			PersonFactory.createTeacher("Jonh", "103 St. James Street");
+			fail("Missing Exception");
+		} catch (PermissionException e) {
+			assertEquals(PermissionException.NEEDS_ADMIN, e.getMessage());			
+		}
+
+		assertEquals(2, Person.getPeople().size());
+	}		
 	
 	@ReplaceTest("people.tests.TestPerson.testCreatePeople,people.tests.TestPerson.testCreateStudent,people.tests.TestPerson.testCreateTeacher,people.tests.TestPerson.testCreateAdmin")
 	public void testCreatePeopleAdmin() throws AuthenticationException {
