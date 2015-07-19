@@ -15,8 +15,8 @@ import com.feup.contribution.aida.annotations.TestFor;
 @PackageName("permission")
 @TestFor("permission")
 public class AuthenticationPermissionsTest extends TestCase {
-	@ReplaceTest("authentication.tests.AuthenticationTest.testAuthentication")
-	public void testAuthenticationPermissions() throws AuthenticationException {
+	@ReplaceTest("authentication.tests.AuthenticationTest.testAuthenticate")
+	public void testAuthenticatePermissions() throws AuthenticationException {
 		Administrator admin = PersonFactory.createAdministrator("John", "103 St. James Street");
 		admin.setLogin("admin");
 		admin.setPassword("1234");
@@ -26,7 +26,6 @@ public class AuthenticationPermissionsTest extends TestCase {
 		Student s = PersonFactory.createStudent("John", "103 St. James Street");
 		s.setLogin("john");
 		s.setPassword("1234");
-		assertEquals("1234", s.getPassword());
 	
 		Authentication.aspectOf().authenticate("john", "1234");
 		try {
@@ -35,11 +34,9 @@ public class AuthenticationPermissionsTest extends TestCase {
 		} catch (PermissionException e) {
 			assertEquals(PermissionException.NEEDS_ADMIN, e.getMessage());			
 		}
-		assertEquals("1234", s.getPassword());
 
 		Authentication.aspectOf().authenticate("admin", "1234");
 		s.setPassword("4321");
-		assertEquals("4321", s.getPassword());		
 	}
 	
 }
